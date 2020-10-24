@@ -3325,10 +3325,69 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _Layouts_AppLayout__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @/Layouts/AppLayout */ "./resources/js/Layouts/AppLayout.vue");
 
 
+function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
+
+function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(Object(source), true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
 function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
 
 function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
 
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -3478,15 +3537,25 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
   },
   data: function data() {
     return {
-      form: this.$inertia.form({
-        name: "",
-        email: "",
+      processingGcash: false,
+      processingGrabpay: false,
+      formGcash: this.$inertia.form({
         address: {
-          street: "",
-          city: "",
-          country: "",
-          zip: ""
-        }
+          street: '',
+          city: '',
+          country: '',
+          zip: ''
+        },
+        amount: 100
+      }),
+      formGrabpay: this.$inertia.form({
+        address: {
+          street: '',
+          city: '',
+          country: '',
+          zip: ''
+        },
+        amount: 200
       })
     };
   },
@@ -3499,14 +3568,46 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
           while (1) {
             switch (_context.prev = _context.next) {
               case 0:
-                _this.$inertia.post("gcash", _this.form);
+                _this.processingGcash = true;
+                _context.next = 3;
+                return _this.$inertia.post(route('ewallet.pay'), _objectSpread(_objectSpread({}, _this.formGrabpay), {}, {
+                  type: 'gcash'
+                }));
 
-              case 1:
+              case 3:
+                _this.processingGcash = false;
+
+              case 4:
               case "end":
                 return _context.stop();
             }
           }
         }, _callee);
+      }))();
+    },
+    payGrabpay: function payGrabpay() {
+      var _this2 = this;
+
+      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee2() {
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee2$(_context2) {
+          while (1) {
+            switch (_context2.prev = _context2.next) {
+              case 0:
+                _this2.processingGrabpay = true;
+                _context2.next = 3;
+                return _this2.$inertia.post(route('ewallet.pay'), _objectSpread(_objectSpread({}, _this2.formGrabpay), {}, {
+                  type: 'grab_pay'
+                }));
+
+              case 3:
+                _this2.processingGrabpay = false;
+
+              case 4:
+              case "end":
+                return _context2.stop();
+            }
+          }
+        }, _callee2);
       }))();
     }
   }
@@ -26485,7 +26586,7 @@ var render = function() {
                   staticClass:
                     "font-semibold text-xl text-gray-800 leading-tight"
                 },
-                [_vm._v("\n            Dashboard\n        ")]
+                [_vm._v("\n      Dashboard\n    ")]
               )
             ]
           },
@@ -26504,9 +26605,7 @@ var render = function() {
               _c("div", { staticClass: "p-20" }, [
                 _c("div", { staticClass: "leading-loose" }, [
                   _c("h1", { staticClass: "font-medium text-lg" }, [
-                    _vm._v(
-                      "\n                            Sample Gcash payment\n                        "
-                    )
+                    _vm._v("\n              Sample Gcash payment\n            ")
                   ]),
                   _vm._v(" "),
                   _c(
@@ -26524,90 +26623,8 @@ var render = function() {
                     [
                       _c("p", { staticClass: "text-gray-800 font-medium" }, [
                         _vm._v(
-                          "\n                                Customer information\n                            "
+                          "\n                Customer information\n              "
                         )
-                      ]),
-                      _vm._v(" "),
-                      _c("div", {}, [
-                        _c(
-                          "label",
-                          {
-                            staticClass: "block text-sm text-gray-00",
-                            attrs: { for: "cus_name" }
-                          },
-                          [_vm._v("Name")]
-                        ),
-                        _vm._v(" "),
-                        _c("input", {
-                          directives: [
-                            {
-                              name: "model",
-                              rawName: "v-model",
-                              value: _vm.form.name,
-                              expression: "form.name"
-                            }
-                          ],
-                          staticClass:
-                            "w-full px-5 py-2 text-gray-700 bg-gray-200 rounded",
-                          attrs: {
-                            id: "cus_name",
-                            name: "cus_name",
-                            type: "text",
-                            required: "",
-                            placeholder: "Your Name",
-                            "aria-label": "Name"
-                          },
-                          domProps: { value: _vm.form.name },
-                          on: {
-                            input: function($event) {
-                              if ($event.target.composing) {
-                                return
-                              }
-                              _vm.$set(_vm.form, "name", $event.target.value)
-                            }
-                          }
-                        })
-                      ]),
-                      _vm._v(" "),
-                      _c("div", { staticClass: "mt-2" }, [
-                        _c(
-                          "label",
-                          {
-                            staticClass: "block text-sm text-gray-600",
-                            attrs: { for: "cus_email" }
-                          },
-                          [_vm._v("Email")]
-                        ),
-                        _vm._v(" "),
-                        _c("input", {
-                          directives: [
-                            {
-                              name: "model",
-                              rawName: "v-model",
-                              value: _vm.form.email,
-                              expression: "form.email"
-                            }
-                          ],
-                          staticClass:
-                            "w-full px-5 py-2 text-gray-700 bg-gray-200 rounded",
-                          attrs: {
-                            id: "cus_email",
-                            name: "cus_email",
-                            type: "email",
-                            required: "",
-                            placeholder: "Your Email",
-                            "aria-label": "Email"
-                          },
-                          domProps: { value: _vm.form.email },
-                          on: {
-                            input: function($event) {
-                              if ($event.target.composing) {
-                                return
-                              }
-                              _vm.$set(_vm.form, "email", $event.target.value)
-                            }
-                          }
-                        })
                       ]),
                       _vm._v(" "),
                       _c("div", { staticClass: "mt-2" }, [
@@ -26625,8 +26642,8 @@ var render = function() {
                             {
                               name: "model",
                               rawName: "v-model",
-                              value: _vm.form.address.street,
-                              expression: "form.address.street"
+                              value: _vm.formGcash.address.street,
+                              expression: "formGcash.address.street"
                             }
                           ],
                           staticClass:
@@ -26639,14 +26656,14 @@ var render = function() {
                             placeholder: "Street",
                             "aria-label": "street"
                           },
-                          domProps: { value: _vm.form.address.street },
+                          domProps: { value: _vm.formGcash.address.street },
                           on: {
                             input: function($event) {
                               if ($event.target.composing) {
                                 return
                               }
                               _vm.$set(
-                                _vm.form.address,
+                                _vm.formGcash.address,
                                 "street",
                                 $event.target.value
                               )
@@ -26670,8 +26687,8 @@ var render = function() {
                             {
                               name: "model",
                               rawName: "v-model",
-                              value: _vm.form.address.city,
-                              expression: "form.address.city"
+                              value: _vm.formGcash.address.city,
+                              expression: "formGcash.address.city"
                             }
                           ],
                           staticClass:
@@ -26684,14 +26701,14 @@ var render = function() {
                             placeholder: "City",
                             "aria-label": "city"
                           },
-                          domProps: { value: _vm.form.address.city },
+                          domProps: { value: _vm.formGcash.address.city },
                           on: {
                             input: function($event) {
                               if ($event.target.composing) {
                                 return
                               }
                               _vm.$set(
-                                _vm.form.address,
+                                _vm.formGcash.address,
                                 "city",
                                 $event.target.value
                               )
@@ -26718,8 +26735,8 @@ var render = function() {
                               {
                                 name: "model",
                                 rawName: "v-model",
-                                value: _vm.form.address.country,
-                                expression: "form.address.country"
+                                value: _vm.formGcash.address.country,
+                                expression: "formGcash.address.country"
                               }
                             ],
                             staticClass:
@@ -26732,14 +26749,14 @@ var render = function() {
                               placeholder: "Country",
                               "aria-label": "country"
                             },
-                            domProps: { value: _vm.form.address.country },
+                            domProps: { value: _vm.formGcash.address.country },
                             on: {
                               input: function($event) {
                                 if ($event.target.composing) {
                                   return
                                 }
                                 _vm.$set(
-                                  _vm.form.address,
+                                  _vm.formGcash.address,
                                   "country",
                                   $event.target.value
                                 )
@@ -26767,8 +26784,8 @@ var render = function() {
                               {
                                 name: "model",
                                 rawName: "v-model",
-                                value: _vm.form.address.zip,
-                                expression: "form.address.zip"
+                                value: _vm.formGcash.address.zip,
+                                expression: "formGcash.address.zip"
                               }
                             ],
                             staticClass:
@@ -26781,14 +26798,14 @@ var render = function() {
                               placeholder: "Zip",
                               "aria-label": "zip"
                             },
-                            domProps: { value: _vm.form.address.zip },
+                            domProps: { value: _vm.formGcash.address.zip },
                             on: {
                               input: function($event) {
                                 if ($event.target.composing) {
                                   return
                                 }
                                 _vm.$set(
-                                  _vm.form.address,
+                                  _vm.formGcash.address,
                                   "zip",
                                   $event.target.value
                                 )
@@ -26799,19 +26816,342 @@ var render = function() {
                       ),
                       _vm._v(" "),
                       _c("div", { staticClass: "mt-4" }, [
-                        _c(
-                          "button",
-                          {
-                            staticClass:
-                              "px-4 py-1 text-white font-light tracking-wider bg-gray-900 rounded",
-                            attrs: { type: "submit" }
-                          },
-                          [
-                            _vm._v(
-                              "\n                                    PHP 5.00\n                                "
+                        _vm.processingGcash
+                          ? _c(
+                              "button",
+                              {
+                                staticClass:
+                                  "inline-flex items-center px-4 py-2 border border-transparent text-base leading-6 font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-500 focus:outline-none focus:border-indigo-700 focus:shadow-outline-indigo active:bg-indigo-700 transition ease-in-out duration-150 cursor-not-allowed",
+                                attrs: { type: "button", disabled: "" }
+                              },
+                              [
+                                _c(
+                                  "svg",
+                                  {
+                                    staticClass:
+                                      "animate-spin -ml-1 mr-3 h-5 w-5 text-white",
+                                    attrs: { viewBox: "0 0 24 24" }
+                                  },
+                                  [
+                                    _c("circle", {
+                                      staticClass: "opacity-25",
+                                      attrs: {
+                                        cx: "12",
+                                        cy: "12",
+                                        r: "10",
+                                        stroke: "currentColor",
+                                        "stroke-width": "4"
+                                      }
+                                    }),
+                                    _vm._v(" "),
+                                    _c("path", {
+                                      staticClass: "opacity-75",
+                                      attrs: {
+                                        fill: "currentColor",
+                                        d:
+                                          "M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
+                                      }
+                                    })
+                                  ]
+                                ),
+                                _vm._v(
+                                  "\n                  Processing\n                "
+                                )
+                              ]
                             )
-                          ]
+                          : _c(
+                              "button",
+                              {
+                                staticClass:
+                                  "inline-flex items-center px-4 py-2 border border-transparent text-base leading-6 font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-500 focus:outline-none focus:border-indigo-700 focus:shadow-outline-indigo active:bg-indigo-700 transition ease-in-out duration-150",
+                                attrs: { type: "submit" }
+                              },
+                              [
+                                _vm._v(
+                                  "\n                  PHP 100.00\n                "
+                                )
+                              ]
+                            )
+                      ])
+                    ]
+                  )
+                ])
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "p-20" }, [
+                _c("div", { staticClass: "leading-loose" }, [
+                  _c("h1", { staticClass: "font-medium text-lg" }, [
+                    _vm._v(
+                      "\n              Sample Grab car payment\n            "
+                    )
+                  ]),
+                  _vm._v(" "),
+                  _c(
+                    "form",
+                    {
+                      staticClass:
+                        "max-w-xl m-4 p-10 bg-white rounded shadow-xl",
+                      on: {
+                        submit: function($event) {
+                          $event.preventDefault()
+                          return _vm.payGrabpay($event)
+                        }
+                      }
+                    },
+                    [
+                      _c("p", { staticClass: "text-gray-800 font-medium" }, [
+                        _vm._v(
+                          "\n                Customer information\n              "
                         )
+                      ]),
+                      _vm._v(" "),
+                      _c("div", { staticClass: "mt-2" }, [
+                        _c(
+                          "label",
+                          {
+                            staticClass: " block text-sm text-gray-600",
+                            attrs: { for: "cus_street" }
+                          },
+                          [_vm._v("Address")]
+                        ),
+                        _vm._v(" "),
+                        _c("input", {
+                          directives: [
+                            {
+                              name: "model",
+                              rawName: "v-model",
+                              value: _vm.formGrabpay.address.street,
+                              expression: "formGrabpay.address.street"
+                            }
+                          ],
+                          staticClass:
+                            "w-full px-2 py-2 text-gray-700 bg-gray-200 rounded",
+                          attrs: {
+                            id: "cus_street",
+                            name: "cus_street",
+                            type: "text",
+                            required: "",
+                            placeholder: "Street",
+                            "aria-label": "street"
+                          },
+                          domProps: { value: _vm.formGrabpay.address.street },
+                          on: {
+                            input: function($event) {
+                              if ($event.target.composing) {
+                                return
+                              }
+                              _vm.$set(
+                                _vm.formGrabpay.address,
+                                "street",
+                                $event.target.value
+                              )
+                            }
+                          }
+                        })
+                      ]),
+                      _vm._v(" "),
+                      _c("div", { staticClass: "mt-2" }, [
+                        _c(
+                          "label",
+                          {
+                            staticClass: "hidden text-sm block text-gray-600",
+                            attrs: { for: "cus_city" }
+                          },
+                          [_vm._v("City")]
+                        ),
+                        _vm._v(" "),
+                        _c("input", {
+                          directives: [
+                            {
+                              name: "model",
+                              rawName: "v-model",
+                              value: _vm.formGrabpay.address.city,
+                              expression: "formGrabpay.address.city"
+                            }
+                          ],
+                          staticClass:
+                            "w-full px-2 py-2 text-gray-700 bg-gray-200 rounded",
+                          attrs: {
+                            id: "cus_city",
+                            name: "cus_city",
+                            type: "text",
+                            required: "",
+                            placeholder: "City",
+                            "aria-label": "city"
+                          },
+                          domProps: { value: _vm.formGrabpay.address.city },
+                          on: {
+                            input: function($event) {
+                              if ($event.target.composing) {
+                                return
+                              }
+                              _vm.$set(
+                                _vm.formGrabpay.address,
+                                "city",
+                                $event.target.value
+                              )
+                            }
+                          }
+                        })
+                      ]),
+                      _vm._v(" "),
+                      _c(
+                        "div",
+                        { staticClass: "inline-block mt-2 w-1/2 pr-1" },
+                        [
+                          _c(
+                            "label",
+                            {
+                              staticClass: "hidden block text-sm text-gray-600",
+                              attrs: { for: "cus_country" }
+                            },
+                            [_vm._v("Country")]
+                          ),
+                          _vm._v(" "),
+                          _c("input", {
+                            directives: [
+                              {
+                                name: "model",
+                                rawName: "v-model",
+                                value: _vm.formGrabpay.address.country,
+                                expression: "formGrabpay.address.country"
+                              }
+                            ],
+                            staticClass:
+                              "w-full px-2 py-2 text-gray-700 bg-gray-200 rounded",
+                            attrs: {
+                              id: "cus_country",
+                              name: "cus_country",
+                              type: "text",
+                              required: "",
+                              placeholder: "Country",
+                              "aria-label": "country"
+                            },
+                            domProps: {
+                              value: _vm.formGrabpay.address.country
+                            },
+                            on: {
+                              input: function($event) {
+                                if ($event.target.composing) {
+                                  return
+                                }
+                                _vm.$set(
+                                  _vm.formGrabpay.address,
+                                  "country",
+                                  $event.target.value
+                                )
+                              }
+                            }
+                          })
+                        ]
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "div",
+                        { staticClass: "inline-block mt-2 -mx-1 pl-1 w-1/2" },
+                        [
+                          _c(
+                            "label",
+                            {
+                              staticClass: "hidden block text-sm text-gray-600",
+                              attrs: { for: "cus_zip" }
+                            },
+                            [_vm._v("Zip")]
+                          ),
+                          _vm._v(" "),
+                          _c("input", {
+                            directives: [
+                              {
+                                name: "model",
+                                rawName: "v-model",
+                                value: _vm.formGrabpay.address.zip,
+                                expression: "formGrabpay.address.zip"
+                              }
+                            ],
+                            staticClass:
+                              "w-full px-2 py-2 text-gray-700 bg-gray-200 rounded",
+                            attrs: {
+                              id: "cus_zip",
+                              name: "cus_zip",
+                              type: "text",
+                              required: "",
+                              placeholder: "Zip",
+                              "aria-label": "zip"
+                            },
+                            domProps: { value: _vm.formGrabpay.address.zip },
+                            on: {
+                              input: function($event) {
+                                if ($event.target.composing) {
+                                  return
+                                }
+                                _vm.$set(
+                                  _vm.formGrabpay.address,
+                                  "zip",
+                                  $event.target.value
+                                )
+                              }
+                            }
+                          })
+                        ]
+                      ),
+                      _vm._v(" "),
+                      _c("div", { staticClass: "mt-4" }, [
+                        _vm.processingGrabpay
+                          ? _c(
+                              "button",
+                              {
+                                staticClass:
+                                  "inline-flex items-center px-4 py-2 border border-transparent text-base leading-6 font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-500 focus:outline-none focus:border-indigo-700 focus:shadow-outline-indigo active:bg-indigo-700 transition ease-in-out duration-150 cursor-not-allowed",
+                                attrs: { type: "button", disabled: "" }
+                              },
+                              [
+                                _c(
+                                  "svg",
+                                  {
+                                    staticClass:
+                                      "animate-spin -ml-1 mr-3 h-5 w-5 text-white",
+                                    attrs: { viewBox: "0 0 24 24" }
+                                  },
+                                  [
+                                    _c("circle", {
+                                      staticClass: "opacity-25",
+                                      attrs: {
+                                        cx: "12",
+                                        cy: "12",
+                                        r: "10",
+                                        stroke: "currentColor",
+                                        "stroke-width": "4"
+                                      }
+                                    }),
+                                    _vm._v(" "),
+                                    _c("path", {
+                                      staticClass: "opacity-75",
+                                      attrs: {
+                                        fill: "currentColor",
+                                        d:
+                                          "M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
+                                      }
+                                    })
+                                  ]
+                                ),
+                                _vm._v(
+                                  "\n                  Processing\n                "
+                                )
+                              ]
+                            )
+                          : _c(
+                              "button",
+                              {
+                                staticClass:
+                                  "inline-flex items-center px-4 py-2 border border-transparent text-base leading-6 font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-500 focus:outline-none focus:border-indigo-700 focus:shadow-outline-indigo active:bg-indigo-700 transition ease-in-out duration-150",
+                                attrs: { type: "submit" }
+                              },
+                              [
+                                _vm._v(
+                                  "\n                  PHP 200.00\n                "
+                                )
+                              ]
+                            )
                       ])
                     ]
                   )

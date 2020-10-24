@@ -1,6 +1,6 @@
 <?php
 
-use App\Http\Controllers\GcashController;
+use App\Http\Controllers\EWalletPaymentController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -23,5 +23,5 @@ Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', function () {
 })->name('dashboard');
 
 Route::middleware('auth:sanctum')->group(function () {
-    Route::post('gcash', [GcashController::class, 'pay']);
+    Route::post('e-wallet/pay', [EWalletPaymentController::class, 'pay'])->name('ewallet.pay');
 });
