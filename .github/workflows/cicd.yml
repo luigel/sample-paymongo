@@ -69,7 +69,6 @@ jobs:
           cp .env.example .env
           php artisan key:generate
           php artisan migrate --force
-          php artisan optimize
         env:
           DB_HOST: ${{ secrets.DB_HOST }}
           DB_DATABASE: ${{ secrets.DB_DATABASE }}
