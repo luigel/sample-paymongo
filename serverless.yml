@@ -10,6 +10,12 @@ provider:
   environment:
     # Laravel environment variables
     APP_STORAGE: '/tmp'
+    DB_HOST: ${ssm:DB_HOST}
+    DB_DATABASE: ${ssm:DB_DATABASE}
+    DB_USERNAME: ${ssm:DB_USERNAME}
+    DB_PASSWORD: ${ssm:DB_PASSWORD}
+    PAYMONGO_SECRET_KEY: ${ssm:PAYMONGO_SECRET_KEY}
+    PAYMONGO_PUBLIC_KEY: ${ssm:PAYMONGO_PUBLIC_KEY}
 
 package:
   # Directories to exclude from deployment
