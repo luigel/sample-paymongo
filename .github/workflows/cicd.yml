@@ -27,24 +27,30 @@ jobs:
           --health-interval=10s
           --health-timeout=5s
           --health-retries=3
-    env:
-      DB_HOST: ${{ secrets.DB_HOST }}
-      DB_DATABASE: ${{ secrets.DB_DATABASE }}
-      DB_USERNAME: ${{ secrets.DB_USERNAME }}
-      DB_PASSWORD: ${{ secrets.DB_PASSWORD }}
-      PAYMONGO_SECRET_KEY: ${{ secrets.PAYMONGO_SECRET_KEY }}
-      PAYMONGO_PUBLIC_KEY: ${{ secrets.PAYMONGO_PUBLIC_KEY }}
-      PAYMONGO_WEBHOOK_SIG: ${{ secrets.PAYMONGO_WEBHOOK_SIG }}
     strategy:
       matrix:
         node-version: [12.x]
     steps:
       - uses: actions/checkout@v2
-      - name: Cache dependencies
+
+      - name: Get Composer Cache Directory
+        id: composer-cache
+        run: |
+          echo "::set-output name=dir::$(composer config cache-files-dir)"
+
+      - name: Cache Composer Downloads
         uses: actions/cache@v1
         with:
-          path: ~/.composer/cache/files
-          key: dependencies-composer-${{ hashFiles('composer.json') }}
+          path: ${{ steps.composer-cache.outputs.dir }}
+          key: ${{ runner.os }}-composer-${{ hashFiles('**/composer.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-composer-
+      - name: Cache PHP dependencies
+        uses: actions/cache@v1
+        with:
+          path: vendor
+          key: ${{ runner.OS }}-build-${{ hashFiles('**/composer.lock') }}
+
       - name: Setup PHP
         uses: shivammathur/setup-php@v2
         with:
@@ -64,6 +70,14 @@ jobs:
           php artisan key:generate
           php artisan migrate --force
           php artisan optimize
+        env:
+          DB_HOST: ${{ secrets.DB_HOST }}
+          DB_DATABASE: ${{ secrets.DB_DATABASE }}
+          DB_USERNAME: ${{ secrets.DB_USERNAME }}
+          DB_PASSWORD: ${{ secrets.DB_PASSWORD }}
+          PAYMONGO_SECRET_KEY: ${{ secrets.PAYMONGO_SECRET_KEY }}
+          PAYMONGO_PUBLIC_KEY: ${{ secrets.PAYMONGO_PUBLIC_KEY }}
+          PAYMONGO_WEBHOOK_SIG: ${{ secrets.PAYMONGO_WEBHOOK_SIG }}
       - name: serverless deploy
         uses: serverless/github-action@master
         with:
