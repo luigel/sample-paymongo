@@ -9,11 +9,29 @@ jobs:
   deploy:
     name: deploy
     runs-on: ubuntu-latest
+    services:
+      # mysql-service Label used to access the service container
+      mysql-service:
+        # Docker Hub image (also with version)
+        image: mysql:8.0
+        env:
+          ## Accessing to Github secrets, where you can store your configuration
+          MYSQL_ROOT_PASSWORD: ${{ secrets.DB_PASSWORD }}
+          MYSQL_DATABASE: ${{ secrets.DB_DATABASE }}
+        ## map the "external" 33306 port with the "internal" 3306
+        ports:
+          - 33306:3306
+        # Set health checks to wait until mysql database has started (it takes some seconds to start)
+        options: >-
+          --health-cmd="mysqladmin ping"
+          --health-interval=10s
+          --health-timeout=5s
+          --health-retries=3
     env:
       DB_HOST: ${{ secrets.DB_HOST }}
-      DB_DATABASE: ${{ secrets.DB_HOST }}
-      DB_USERNAME: ${{ secrets.DB_HOST }}
-      DB_PASSWORD: ${{ secrets.DB_HOST }}
+      DB_DATABASE: ${{ secrets.DB_DATABASE }}
+      DB_USERNAME: ${{ secrets.DB_USERNAME }}
+      DB_PASSWORD: ${{ secrets.DB_PASSWORD }}
       PAYMONGO_SECRET_KEY: ${{ secrets.PAYMONGO_SECRET_KEY }}
       PAYMONGO_PUBLIC_KEY: ${{ secrets.PAYMONGO_PUBLIC_KEY }}
       PAYMONGO_WEBHOOK_SIG: ${{ secrets.PAYMONGO_WEBHOOK_SIG }}
