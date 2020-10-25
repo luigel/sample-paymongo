@@ -7,14 +7,10 @@
         "laravel"
     ],
     "license": "MIT",
-    "repositories": [
-        {
-            "type": "path",
-            "url": "../laravel-paymongo"
-        }
-    ],
     "require": {
         "php": "^7.3",
+        "bref/bref": "^0.5.31",
+        "bref/laravel-bridge": "^0.2.2",
         "fideloper/proxy": "^4.2",
         "fruitcake/laravel-cors": "^2.0",
         "guzzlehttp/guzzle": "^7.0.1",
@@ -23,7 +19,7 @@
         "laravel/jetstream": "^1.5",
         "laravel/sanctum": "^2.6",
         "laravel/tinker": "^2.0",
-        "luigel/laravel-paymongo": "*",
+        "luigel/laravel-paymongo": "1.x-dev",
         "tightenco/ziggy": "^0.9.4"
     },
     "require-dev": {
