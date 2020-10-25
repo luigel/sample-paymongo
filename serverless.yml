@@ -7,6 +7,9 @@ provider:
   # The stage of the application, e.g. dev, production, staging… ('dev' is the default)
   stage: dev
   runtime: provided
+  environment:
+    # Laravel environment variables
+    APP_STORAGE: '/tmp'
 
 package:
   # Directories to exclude from deployment
